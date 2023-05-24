@@ -1,44 +1,15 @@
-import{useState,useEffect} from "react";
-
-function MovieLoaded({movielst}){
-  return(
-    <div>
-        {movielst.map((movie)=>(
-        <div key={movie.id}>
-          <h1>{movie.rank}</h1>
-          <img src = {`https://image.tmdb.org/t/p/w342/${movie.poster_path}`} alt={movie.title}/>
-          <h2>{movie.title}</h2>
-          <p>popularity:{movie.popularity}<br/>release:{movie.release_date}<br/>{movie.overview}</p>
-          <h4>⭐️:{movie.vote_count}</h4>
-          <br/>
-          {/* <ul>
-            {movie.genres.map(g => <li key={g}>{g}</li>)}
-          </ul> */}
-        </div>))}
-      </div>
-  )
-}
-
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Home from './route/Home';
+import Detail from './route/Detail';
 function App() {
-  const [loading,setLoading] = useState(true);
-  const [movies,setMovies] = useState([]);
-  //async: 비동기 함수임을 선언>promise 반환, await: promise가 처리될때까지 함수실행 중단,프로미스(Promise): JavaScript에서 비동기 작업의 최종 완료 또는 실패를 나타내는 객체
-  const getMovies = async() =>{
-    const json = await (await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=c8d25a0e368c2fa300db030d25d976a2`)).json();
-   //const json = await response.json();
-  //console.log(json.results);
-    setMovies(json.results);
-    setLoading(false);  
-  }
-  console.log(movies);
-  useEffect(() => {getMovies()},[])
-  
-  return (
-    <div>
-      {loading ? <h1>Loading...</h1>:<MovieLoaded movielst={movies}/>}
-      {/* {loading ? <h1>Loading...</h1>:null} */}
-    </div>
-  );
+  return(
+    <Router>
+      <Switch>
+        <Route path="/detail/:movieId"><Detail /></Route>
+        <Route path="/"><Home /></Route>
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;
