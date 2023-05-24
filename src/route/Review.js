@@ -29,7 +29,7 @@ export default Review;
 // movie/{movie_id}: 특정 영화의 상세 정보를 가져옵니다.
 // movie/{movie_id}/credits: 특정 영화의 출연진 정보를 가져옵니다.
 // movie/{movie_id}/reviews: 특정 영화의 리뷰 정보를 가져옵니다.
-// movie/{movie_id}/videos: 특정 영화의 비디오 정보를 가져옵니다.
+// movie/{movie_id}/videos: 특정 영화의 비디오 정보를 가져옵니다. >> 유튜브 API 필요함
 // 영화 목록:
 
 // movie/popular: 인기 있는 영화 목록을 가져옵니다.

@@ -1,9 +1,10 @@
 import {IMAGE_BASE_URL,YOUTUBE_URL} from "../api";
 import{useState} from "react";
 import styles from "./MovieDetail.module.css";
-import Review from "./Review"
+import Review from "./Review";
+import Profile from "./Profile";
 //`${YOUTUBE_URL}?v=${}`
-function DetailInfo({info,reviews,videoPath}){
+function DetailInfo({info,reviews,videoPath,actors}){
     const backgroundImageStyle = {
         backgroundImage: `url(${IMAGE_BASE_URL}/${info.backdrop_path})`,
         backgroundSize: 'cover',
@@ -19,12 +20,15 @@ function DetailInfo({info,reviews,videoPath}){
             <h1>{info.title}</h1>
             <img src = {`${IMAGE_BASE_URL}/${info.poster_path}`} style={{filter: 'none'}}/>
 
-            <a href={info.homepage}>go to homepage</a>
             <p style={{color:'white'}}>{info.overview}</p>
             <ul>
                 {info.genres.map((genre,idx)=><li key={idx}>{genre.name}</li>)}
             </ul>
             
+            
+            <Profile actors={actors}/>
+            
+
             <h4>runtime:{info.runtime} min</h4>
             <h4>popularity:{info.popularity}</h4>
             <h4>release:{info.release_date}</h4>
