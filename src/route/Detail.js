@@ -1,7 +1,7 @@
 import{useEffect,useState} from "react";
 import{API_KEY,BASE_PATH} from "../api";
 import {useParams} from "react-router-dom";
-import DetailInfo from "./DetailInfo";
+import DetailInfo from "../components/Detail/DetailInfo";
 
 
 function Detail(){
@@ -11,25 +11,38 @@ function Detail(){
     const [videoPath,setVideoPath] = useState([]);
     const [actors,setActors] = useState([]);
     const {movieId} = useParams();
+    let teaserVideoKey = null;
+
     const getMovieDetails = async() =>{
         const detailJson = await(await fetch(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`)).json(); 
         const reviewJson = await(await fetch(`${BASE_PATH}/movie/${movieId}/reviews?api_key=${API_KEY}`)).json();
         const videoJson = await(await fetch(`${BASE_PATH}/movie/${movieId}/videos?api_key=${API_KEY}`)).json();
         const actorJson = await(await fetch(`${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}`)).json()
-        //console.log(actorJson);
+        //console.log(videoJson);
         setDetails(detailJson);
         setReviews(reviewJson.results);
-        setVideoPath(videoJson.results[0].key);
+        setVideoPath(videoJson.results);
         setActors(actorJson.cast);
         setLoading(false);
        
     }
 
+  
+    //console.log(teaserVideoId);
     useEffect(() => {getMovieDetails()},[])
     //console.log(actors);
+
+    for (let i = 0; i < videoPath.length; i++) {
+        const video =videoPath[i];
+        if (video.type === "Teaser") {
+            teaserVideoKey = video.key;
+            break; // 첫 번째 "teaser" 타입의 비디오를 찾으면 반복문을 종료합니다.
+        }
+    }
+
     return(
-        <div>
-            {loading ? <h1>Loading..</h1>: <DetailInfo info={details} reviews={reviews} videoPath={videoPath} actors={actors}/>}
+        <div>   
+            {loading ? <h1>Loading..</h1>: <DetailInfo info={details} reviews={reviews} videoKey={teaserVideoKey} actors={actors}/>}
         </div>
         
     )

@@ -2,12 +2,9 @@ import PropTypes from "prop-types"
 import {Link} from "react-router-dom";
 import{IMAGE_BASE_URL} from "../api";
 
-function DefineGenre({genreId,genrelst}){
-  const genre = genrelst.find((genre) => genre.id === genreId);
-  return genre ? <li>{genre.name}</li> : '';
-}
 
-function MovieLoaded({movielst,genres}){
+
+function MovieLoaded({movielst}){
     //console.log(movielst.genre_ids);
     //movielst.map((m)=>{m.adult})
     return(
