@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // Get the current URL path
+      var currentPath = window.location.pathname;
+
+      // Redirect to "/" with the current path as a query parameter
+      window.location.href = '/?path=' + encodeURIComponent(currentPath);
+    </script>
+  </head>
+  <body>
+    <!-- Display a loading message or any other content if needed -->
+    <p>Loading...</p>
+  </body>
+</html>
