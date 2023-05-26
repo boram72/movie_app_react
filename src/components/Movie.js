@@ -1,24 +1,68 @@
 import PropTypes from "prop-types"
 import {Link} from "react-router-dom";
 import{IMAGE_BASE_URL} from "../api";
-
-
+import styles from "./Movie.module.css";
+import {useRef, useState} from "react";
 
 function MovieLoaded({movielst}){
     //console.log(movielst.genre_ids);
     //movielst.map((m)=>{m.adult})
+
+    const movieTop10 = movielst.slice(0, 10);
+
+    const handleMouseEnter = () => {
+      document.querySelector(`.${styles.carousel}`).style.animationPlayState = 'paused';
+    };
+  
+    const handleMouseLeave = () => {
+      document.querySelector(`.${styles.carousel}`).style.animationPlayState = 'running';
+    };
+
+    const carouselRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+
+
+    const handleMouseDown = (event) => {
+      setIsDragging(true);
+      //console.dir(event.pageX);
+      setStartX(event.pageX - carouselRef.current.offsetLeft);
+      console.log(startX);
+      // setScrollLeft(carouselRef.current.scrollLeft);
+    };
+    
+    const handleMouseMove = (event) => {
+      if (!isDragging) return;
+      event.preventDefault();
+      //console.log(event.clientX);
+      const x = event.pageX - carouselRef.current.offsetLeft;
+      const walk = (x - startX) * 3; // 이동 거리에 따라 조절
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+      console.log(carouselRef);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+    
+    
     return(
-      <div>
-          {movielst.map((movie)=>(
-          <div key={movie.id}>
-            <h2>
-              <Link to = {`./detail/${movie.id}`}>✔ {movie.title}</Link> {/*url에 변수를 추가해서 보낼 수 있음*/ }
-              </h2>
-            <img src = {`${IMAGE_BASE_URL}/${movie.poster_path}`} alt={movie.title}/>
-            <h4>⭐️:{movie.vote_average} /10 ({movie.vote_count})</h4>
-            <br/>
-          </div>))}
+        <div className={styles.stage}>
+          <div className={styles.carousel} onMouseEnter={handleMouseEnter}  onMouseLeave={handleMouseLeave}>
+              
+              {movieTop10.map((movie,idx)=>(
+              <div key={movie.id} className = {styles.item}>
+                <Link to = {`./detail/${movie.id}`} className={styles.title}>
+                <h3>{idx+1}. {movie.title}</h3> {/*url에 변수를 추가해서 보낼 수 있음*/ }
+                <img src = {`${IMAGE_BASE_URL}/${movie.poster_path}`} alt={movie.title} width ="280px" height="auto"/>
+                <h4>⭐️:{movie.vote_average} /10 ({movie.vote_count})</h4>
+                </Link>
+              </div>))}
+
+            </div>
         </div>
+
     )
   }
 

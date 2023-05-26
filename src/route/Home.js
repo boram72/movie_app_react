@@ -1,6 +1,7 @@
 import{useState,useEffect} from "react";
 import MovieLoaded from "../components/Movie"
 import{API_KEY,BASE_PATH} from "../api";
+import PubaoLoader from "../components/loader/PubaoLoader";
 
 function Home(){
     const [loading,setLoading] = useState(true);
@@ -17,10 +18,11 @@ function Home(){
     useEffect(() => {getMovies()},[])
     
     return (
-      <div>
-        {loading ? <h1>Loading...</h1>:<MovieLoaded movielst={movies} />}
+      <>
+        {loading ? <PubaoLoader/>:<MovieLoaded movielst={movies} />}
+        
         {/* {loading ? <h1>Loading...</h1>:null} */}
-      </div>
+      </>
     );
 }
 

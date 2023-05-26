@@ -2,6 +2,7 @@ import{useEffect,useState} from "react";
 import{API_KEY,BASE_PATH} from "../api";
 import {useParams} from "react-router-dom";
 import DetailInfo from "../components/Detail/DetailInfo";
+import PubaoLoader from "../components/loader/PubaoLoader";
 
 
 function Detail(){
@@ -42,7 +43,7 @@ function Detail(){
 
     return(
         <div>   
-            {loading ? <h1>Loading..</h1>: <DetailInfo info={details} reviews={reviews} videoKey={teaserVideoKey} actors={actors}/>}
+            {loading ? <PubaoLoader/>: <DetailInfo info={details} reviews={reviews} videoKey={teaserVideoKey} actors={actors}/>}
         </div>
         
     )

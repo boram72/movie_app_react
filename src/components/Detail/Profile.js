@@ -1,5 +1,5 @@
 import {PROFILE_IMAGE} from "../../api";
-
+import styled from "styled-components";
 
 function SetActor({cast}){
     //console.log(actor.actor)
@@ -7,18 +7,52 @@ function SetActor({cast}){
     const imageUrl = cast.profile_path !== null ? `${PROFILE_IMAGE}${cast.profile_path}` : DEFAULT_IMAGE;
    
     return(
-        <span style={{float:"left"}} id={cast.id}>
+        <CastList id={cast.id}>
             <img src={imageUrl} alt="Profile" style={{ width: '185px', height: '278px' }} />
             <h3>{cast.original_name}<br/>{cast.character}</h3>        
-        </span>
+        </CastList>
     );
 }
 
 function Profile({actors}){
     //console.log(actors)
+    const castTop10 = actors.slice(0,10);
     return(
-        actors.map((actor) => <SetActor cast={actor} id={actor.id}/>)  
-      
+        <CastWrap>
+            {castTop10.map((actor) => <SetActor cast={actor} id={actor.id}/>) } 
+        </CastWrap>
     );
 }
 export default Profile;
+
+const CastWrap = styled.div`
+    width: 740px; /*자식요소와 크기를 동일하게 고정시켜야함*/
+    height: 320px;
+    position:relative;
+    transform-style: preserve-3d; /*자식 요소들에 대한 3D 변환 동작을 정의*
+
+    overflow-x:scroll;
+    top: 21%;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+
+`;
+
+const CastList = styled.span`
+
+    float:left;
+    width: 185px;
+    height: 320px;
+   
+   
+    font-size: 15px;
+    color: white;
+    border: 2px solid white;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+`
