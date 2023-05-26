@@ -1,0 +1,17 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;/* 뷰포트의 세로 높이 만큼 설정 */
+  }
+
+ #root{
+    margin: 0;
+    padding: 0;
+    height: 100%; /* 뷰포트의 세로 높이 만큼 설정 */
+ 
+ }
